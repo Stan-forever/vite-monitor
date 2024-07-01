@@ -1,6 +1,7 @@
 <template>
-	<div class="appTest">
-		<div class="child">App</div>
+	<div class="appTest flex">
+		<div class="child">App1</div>
+		<div class="child">App2</div>
 	</div>
 </template>
 
