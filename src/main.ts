@@ -1,5 +1,9 @@
 import { createApp } from 'vue'
 
+//ElementPlus
+import ElementPlus from 'element-plus'
+import 'element-plus/dist/index.css'
+
 //taildwindcss
 import 'tailwindcss/tailwind.css'
 // reset style sheet
@@ -7,4 +11,6 @@ import '@/styles/reset.css'
 
 import App from './App.vue'
 
-createApp(App).mount('#app')
+const app = createApp(App)
+app.use(ElementPlus)
+app.mount('#app')
