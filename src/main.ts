@@ -7,6 +7,9 @@ import 'element-plus/dist/index.css'
 //Pinia
 import { createPinia } from 'pinia'
 
+//router
+import router from '@/router'
+
 //taildwindcss
 import 'tailwindcss/tailwind.css'
 // reset style sheet
@@ -18,4 +21,5 @@ const app = createApp(App)
 const pinia = createPinia()
 app.use(ElementPlus)
 app.use(pinia)
+app.use(router)
 app.mount('#app')
