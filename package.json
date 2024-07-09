@@ -17,6 +17,7 @@
     "@vue/runtime-core": "^3.4.31",
     "@vueuse/core": "^10.11.0",
     "axios": "^1.7.2",
+    "dayjs": "^1.11.11",
     "element-plus": "^2.7.6",
     "jsencrypt": "^3.3.2",
     "nprogress": "^0.2.0",
