@@ -5,6 +5,7 @@ import NProgress from '@/config/ngprogress'
 import { staticRouter, errorRouter } from './modules/staticRouter'
 import { initDynamicRouter } from './modules/dynamicRouter'
 import { LOGIN_URL } from '@/config'
+import { useUrlSearchParams } from '@vueuse/core'
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -12,9 +13,13 @@ const router = createRouter({
   strict: false
 })
 
+const params = useUrlSearchParams('hash')
+
 router.beforeEach(async (to, from, next) => {
   const userStore = useUserStore()
   const meneStore = useMenuStore()
+
+  if (params.token) userStore.setToken(params.token as string)
 
   //NProgress开始
   NProgress.start()

@@ -31,6 +31,14 @@ pnpm install pinia
 --NProgress
 pnpm install --save nprogress
 
+--iconfont
+https://www.iconfont.cn/help/detail?spm=a313x.search_index.i3.28.47343a81mQV4FC&helptype=code
+symbol 引用
+pnpm install vite-plugin-svg-icons -D
+vite配置createSvgIconsPlugin
+main.ts 引入 (import 'virtual:svg-icons-register')
+
+
 --Axios封装
 
 --Echarts封装

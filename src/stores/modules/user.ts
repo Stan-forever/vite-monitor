@@ -12,7 +12,7 @@ export const useUserStore = defineStore({
       token: '',
       userInfo: {
         modType: 'bydata',
-        userType: '1'
+        userType: 1
       }
     }
   },

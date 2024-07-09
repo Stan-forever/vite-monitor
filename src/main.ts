@@ -11,6 +11,12 @@ import router from '@/router'
 import 'tailwindcss/tailwind.css'
 // reset style sheet
 import '@/styles/reset.css'
+// custom element css
+import '@/styles/element.scss'
+// CSS common style sheet
+import '@/styles/common.scss'
+
+import 'virtual:svg-icons-register'
 
 const app = createApp(App)
 

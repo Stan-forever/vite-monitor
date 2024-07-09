@@ -25,7 +25,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, onMounted } from 'vue'
+import { ref, reactive, onMounted, computed } from 'vue'
 import type { FormInstance, FormRules } from 'element-plus'
 import { LoginParamsType, loginApi, CodeRes, getCodeApi } from '@/services/modules/login'
 import JSEncrypt from 'jsencrypt'
@@ -68,23 +68,28 @@ const encryptPublic = (value: string) => {
 }
 
 const userStore = useUserStore()
-const menuStore = useMenuStore()
+
+const defaultActive = computed(() => {
+  return userStore.userInfo.userType === 1 ? '/system/userBasicInfo' : '/home'
+})
 
 const handleLogin = async (formEl: FormInstance | undefined) => {
   if (!formEl) return
   await formEl.validate(async (valid, fields) => {
     if (valid) {
       const { username, password } = form.value
-      const res = await loginApi({
-        ...form.value,
-        username: encryptPublic(username),
-        password: encryptPublic(password)
-      })
+      const res = await loginApi(
+        {
+          ...form.value,
+          username: encryptPublic(username),
+          password: encryptPublic(password)
+        },
+        'loginApiLoader'
+      )
       const { token, userInfo } = res.data
       userStore.setUserInfo(userInfo)
       userStore.setToken(token)
-
-      router.push('/home')
+      router.push(defaultActive.value)
     } else {
       console.log('error submit!', fields)
     }

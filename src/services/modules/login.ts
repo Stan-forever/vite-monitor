@@ -1,5 +1,4 @@
 import http from '@/services/index'
-import authMenuList from '@/assets/json/authMenuList.json'
 
 export interface LoginParamsType {
   code: string
@@ -10,14 +9,14 @@ export interface LoginParamsType {
 export type ModType = 'console' | 'bydata'
 export interface UserInfo {
   modType: ModType
-  userType: '1' | '2'
+  userType: 1 | 2
 }
 export interface LoginResType {
   token: string
   userInfo: UserInfo
 }
-export const loginApi = (params: LoginParamsType) => {
-  return http.post<LoginResType>('/bydata-auth/auth/login', params)
+export const loginApi = (params: LoginParamsType, loadingLoader: string) => {
+  return http.post<LoginResType>('/bydata-auth/auth/login', params, loadingLoader)
 }
 
 export interface CodeRes {
