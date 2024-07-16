@@ -12,7 +12,7 @@ export const staticRouter: Array<RouteRecordRaw> = [
     meta: {
       title: '登录'
     },
-    component: () => import('@/views/login/index.vue')
+    component: () => import('@/views/Login/index.vue')
   },
   {
     path: '/layout',

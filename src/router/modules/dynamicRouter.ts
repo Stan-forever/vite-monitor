@@ -3,6 +3,7 @@ import { useUserStore } from '@/stores/modules/user'
 import { useMenuStore } from '@/stores/modules/menu'
 import router from '..'
 import { LOGIN_URL } from '@/config'
+import { capitalizePath } from '@/utils/toUpperCase'
 
 // 引入 views 文件夹下所有 vue 文件
 const modules = import.meta.glob('@/views/**/*.vue')
@@ -20,7 +21,7 @@ export const initDynamicRouter = async () => {
       return Promise.reject('No permission')
     }
     menuStore.flatMenuListGet.forEach((item) => {
-      item.component = modules['/src/views' + item.path.replace('#', '') + '/index' + '.vue']
+      item.component = modules['/src/views' + capitalizePath(item.path) + '/index' + '.vue']
       router.addRoute('layout', item as RouteRecordRaw)
     })
   } catch (error) {
