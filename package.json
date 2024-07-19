@@ -19,6 +19,7 @@
     "async-validator": "^4.2.5",
     "axios": "^1.7.2",
     "dayjs": "^1.11.11",
+    "echarts": "^5.5.1",
     "element-plus": "^2.7.6",
     "jsencrypt": "^3.3.2",
     "nprogress": "^0.2.0",

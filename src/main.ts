@@ -9,6 +9,8 @@ import pinia from '@/stores/index'
 import router from '@/router'
 //taildwindcss
 import 'tailwindcss/tailwind.css'
+// element主题修改
+import '@/styles/elementVariable.scss'
 // reset style sheet
 import '@/styles/reset.css'
 // custom element css

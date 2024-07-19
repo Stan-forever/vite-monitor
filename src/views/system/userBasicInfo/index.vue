@@ -5,7 +5,7 @@
         <el-tree :data="treeData" :props="defaultProps" default-expand-all></el-tree>
       </el-scrollbar>
     </div>
-    <div class="flex flex-col flex-1 h-full overflow-scroll card">
+    <div class="flex flex-col flex-1 h-full card">
       <el-form inline :model="searchForm">
         <el-form-item>
           <el-button type="primary" @click="openUserEditor('创建')">创建用户</el-button>
@@ -18,8 +18,8 @@
           <el-button @click="handleReset">重置</el-button>
         </el-form-item>
       </el-form>
-      <template v-if="tableData.list.length">
-        <el-table :data="tableData.list" v-loading="tableData.tableLoading" class="h-full">
+      <template v-if="tableData.length">
+        <el-table :data="tableData" v-loading="tableLoading" class="h-full">
           <el-table-column label="用户名" prop="userName" min-width="120"></el-table-column>
           <el-table-column label="姓名" prop="nickName" min-width="100"></el-table-column>
           <el-table-column label="部门" prop="deptName" min-width="100"></el-table-column>
@@ -41,25 +41,18 @@
             </template>
           </el-table-column>
           <el-table-column label="创建时间" prop="createdTime" min-width="200"></el-table-column>
-          <el-table-column label="操作" fixed="right" min-width="150">
+          <el-table-column label="操作" fixed="right" min-width="120">
             <template #default="{ row }">
-              <el-button type="primary" link @click="openDrawer('查看', row)">查看</el-button>
               <el-button type="primary" link @click="openUserEditor('编辑', row)">编辑</el-button>
               <el-button type="danger" link @click="deleteUser(row)">删除</el-button>
             </template>
           </el-table-column>
         </el-table>
         <div class="flex justify-end">
-          <el-pagination
-            v-model:current-page="searchForm.current"
-            v-model:page-size="searchForm.pageSize"
-            :page-sizes="[10, 20, 30, 40, 50, 100]"
-            layout="total, sizes, prev, pager, next, jumper"
-            :total="tableData.totalCount"
-            @size-change="handleSizeChange"
-            @current-change="handleCurrentChange"
-            class="mt-4"
-            background
+          <Pagination
+            :pageable="pageable"
+            :handle-current-change="handleCurrentChange"
+            :handle-size-change="handleSizeChange"
           />
         </div>
       </template>
@@ -75,8 +68,10 @@ import { deptTreeApi } from '@/services/modules/system/dept'
 import { TableApi, AddUserApi, UpdateUserApi } from '@/services/modules/system/userBasicInfo'
 import { UserBasicInfo, Dept } from '@/services/interface'
 import UserEditor from './components/UserEditor.vue'
+import Pagination from '@/components/Pagination/index.vue'
 import useSearchForm from '@/hooks/useSearchForm'
 import { useHandleData } from '@/hooks/useHandleData'
+import { useTable } from '@/hooks/useTable'
 
 const defaultProps = {
   children: 'children',
@@ -90,50 +85,26 @@ const getTreeData = async () => {
 
 type QueryParams = {
   keyword: string
-  current: number
-  pageSize: number
+  deptId: string
 }
 const { searchForm, resetSearchForm } = useSearchForm<QueryParams>({
   keyword: '',
-  current: 1,
-  pageSize: 10
+  deptId: ''
 })
 
-interface TableData {
-  list: UserBasicInfo.Table[]
-  tableLoading: boolean
-  totalCount: number
-}
-const tableData = reactive<TableData>({
-  list: [],
-  tableLoading: false,
-  totalCount: 0
-})
-const getTableData = async () => {
-  tableData.tableLoading = true
-  try {
-    const { data } = await TableApi({ deptId: '', ...searchForm })
-    tableData.list = data.dataList
-    tableData.totalCount = data.totalCount
-    tableData.tableLoading = false
-  } catch (error) {
-    tableData.tableLoading = false
-  }
-  return tableData.list
-}
-
-const handleSizeChange = (pageSize: number) => {
-  searchForm.pageSize = pageSize
-  getTableData()
-}
-
-const handleCurrentChange = (current: number) => {
-  searchForm.current = current
-  getTableData()
-}
+const {
+  tableData,
+  getTableData,
+  tableLoading,
+  resetPagination,
+  pageable,
+  handleCurrentChange,
+  handleSizeChange
+} = useTable(TableApi, searchForm)
 
 const handleReset = () => {
   resetSearchForm()
+  resetPagination()
   getTableData()
 }
 
