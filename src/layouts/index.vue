@@ -14,9 +14,11 @@
       </el-scrollbar>
     </el-aside>
     <el-container>
-      <el-header class="flex justify-between">
-        <ToolBarLeft />
-        <ToolBarRight />
+      <el-header>
+        <div class="flex justify-between h-1/2">
+          <ToolBarLeft />
+          <ToolBarRight />
+        </div>
       </el-header>
       <Main />
     </el-container>

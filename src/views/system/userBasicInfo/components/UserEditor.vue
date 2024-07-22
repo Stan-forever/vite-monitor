@@ -98,18 +98,6 @@ const acceptParams = (params: Params) => {
   getPostList()
 }
 
-// const initForm = (): UserBasicInfo.EditorUserParams => ({
-//   userName: '',
-//   nickName: '',
-//   deptId: '',
-//   postIds: '',
-//   phoneNumber: '',
-//   email: '',
-//   sex: '0',
-//   status: '1',
-//   password: ''
-// })
-// const form = reactive(initForm())
 const formRef = ref<FormInstance>()
 const rules: API.Rules = {
   userName: [

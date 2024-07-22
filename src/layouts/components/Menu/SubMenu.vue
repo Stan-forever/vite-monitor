@@ -17,13 +17,17 @@
 <script setup lang="ts">
 import SubMenu from '@/layouts/components/Menu/SubMenu.vue'
 import { useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
 
 defineProps<{
   menuList: any[]
 }>()
 
+const route = useRoute()
 const router = useRouter()
 const handleClickMenu = (subItem: any) => {
+  console.log('route', route)
+
   router.push(subItem.path)
 }
 </script>

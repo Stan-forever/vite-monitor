@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { getMenuApi } from '@/services/modules/login'
 import { useUserStore } from './user'
-import { getFlatMenuList } from '@/utils'
+import { getFlatMenuList, getAllBreadcrumbList } from '@/utils'
 import { LOGIN_URL } from '@/config'
 import router from '@/router'
 
@@ -20,7 +20,8 @@ export const useMenuStore = defineStore({
     flatMenuListGet: (state) => getFlatMenuList(state.menuList),
     defaultActive: (state) =>
       getFlatMenuList(state.menuList).find((item) => item.children.length === 0).path ||
-      getFlatMenuList(state.menuList)[0].path
+      getFlatMenuList(state.menuList)[0].path,
+    breadcrumbListGet: (state) => getAllBreadcrumbList(state.menuList)
   },
   actions: {
     async setMenuList() {
