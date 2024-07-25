@@ -15,9 +15,14 @@ import { useMenuStore } from '@/stores/modules/menu'
 const route = useRoute()
 const menuStore = useMenuStore()
 
-const breadcrumbList = computed(() => {
-  let breadcrumbData =
-    menuStore.breadcrumbListGet[route.matched[route.matched.length - 1].path] ?? []
-  return [breadcrumbData]
-})
+// const breadcrumbList = computed(() => {
+//   let breadcrumbData =
+//     menuStore.breadcrumbListGet[route.matched[route.matched.length - 1].path] ?? []
+//   return [breadcrumbData]
+// })
+const breadcrumbList = [
+  { path: '1', menuName: 1 },
+  { path: '2', menuName: 2 },
+  { path: '3', menuName: 3 }
+]
 </script>

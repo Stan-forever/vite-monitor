@@ -28,6 +28,11 @@ export default defineConfig({
         changeOrigin: false,
         secure: false, // 添加本行内容修复错误
         rewrite: (path) => path.replace(/^\/api/, '')
+      },
+      '/wikipedia-api': {
+        target: 'http://112.5.142.51:14007/api',
+        changeOrigin: true,
+        rewrite: (path) => path.replace('/wikipedia-api', '')
       }
     }
   },

@@ -12,13 +12,13 @@ export const staticRouter: Array<RouteRecordRaw> = [
     meta: {
       title: '登录'
     },
+    // component: () => import('@/views/Metrix/index.vue')
     component: () => import('@/views/Login/index.vue')
   },
   {
     path: '/layout',
     name: 'layout',
     component: () => import('@/layouts/index.vue'),
-    // component: () => import("@/layouts/indexAsync.vue"),
     redirect: HOME_URL,
     children: []
   }

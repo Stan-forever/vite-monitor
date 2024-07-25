@@ -2,9 +2,11 @@ import { reactive, ref } from 'vue'
 import { FormInstance } from 'element-plus'
 
 export const useForm = (data: { [key: string]: any }) => {
-  const initForm = () => ({
-    ...data
-  })
+  const initForm = () => {
+    console.log('data', data)
+
+    return data
+  }
 
   const form = reactive(initForm())
   const formRef = ref<FormInstance>()

@@ -12,3 +12,7 @@ body,
 :-webkit-any(article, aside, nav, section) h1 {
   font-size: 2em;
 }
+
+html {
+    cursor: url('../assets//images/cursor/mouse.png'), auto !important;
+}
