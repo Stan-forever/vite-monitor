@@ -1,18 +1,7 @@
-// styles/element/index.scss
-/* 只需要重写你需要的即可 */
-// @forward 'element-plus/theme-chalk/src/common/var.scss' with (
-//   $colors: (
-//     'primary': (
-//       'base': #1677ff
-//     )
-//   )
-// );
-
 :root {
-  --el-color-primary: #1677ff;
+  --el-color-primary: #409eff;
 }
 
 .el-table .el-table__header-wrapper {
   --el-table-header-bg-color: #f1f5f9;
-  // border-radius: .125rem;
 }

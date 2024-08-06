@@ -1,6 +1,6 @@
 import { UnwrapNestedRefs, reactive } from 'vue'
 
-const useSearchForm = <T extends Record<string, unknown>>(
+export const useSearchForm = <T extends Record<string, unknown>>(
   initFormData: T
 ): {
   searchForm: UnwrapNestedRefs<T>
@@ -30,5 +30,3 @@ const useSearchForm = <T extends Record<string, unknown>>(
   }
   return { searchForm, resetSearchForm, getFilterForm }
 }
-
-export default useSearchForm

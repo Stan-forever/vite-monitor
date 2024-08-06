@@ -33,6 +33,18 @@ export default defineConfig({
         target: 'http://112.5.142.51:14007/api',
         changeOrigin: true,
         rewrite: (path) => path.replace('/wikipedia-api', '')
+      },
+      '/manager': {
+        target: 'http://192.168.100.205:8201/manager',
+        ws: true,
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/manager/, '')
+      },
+      '/jcsdyy': {
+        target: 'http://192.168.100.205:8202/jcsdyy',
+        ws: true,
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/jcsdyy/, '')
       }
     }
   },

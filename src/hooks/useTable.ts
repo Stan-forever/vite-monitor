@@ -35,6 +35,7 @@ export const useTable = (
       state.tableData = data.dataList
       state.pageable.totalCount = data.totalCount
       state.tableLoading = false
+      console.log('tableData', state.tableData)
     } catch (error) {
       state.tableLoading = false
     }

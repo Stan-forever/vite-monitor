@@ -12,8 +12,5 @@ export namespace Table {
     tableData: any[]
     tableLoading: boolean
     pageable: Pageable
-    // searchParams: {
-    //   [key: string]: any
-    // }
   }
 }

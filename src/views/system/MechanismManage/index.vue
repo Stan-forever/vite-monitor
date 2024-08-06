@@ -1,42 +1,67 @@
 <template>
   <div class="flex flex-col card">
-    <div>
-      <el-tabs v-model="activeName">
-        <el-tab-pane label="全部" name="all"></el-tab-pane>
-        <el-tab-pane label="参保类" name="1"></el-tab-pane>
-        <el-tab-pane label="待遇类" name="2"></el-tab-pane>
-        <el-tab-pane label="财务类" name="3"></el-tab-pane>
-      </el-tabs>
-      <div class="flex">
-        <el-select class="w-32"></el-select>
-        <el-input class="w-52" placeholder="请输入"></el-input>
-        <el-button type="primary" class="ml-3">查询</el-button>
-        <el-button>重置</el-button>
-      </div>
-      <div class="flex mt-4">
-        <el-button type="primary">新建指标口径</el-button>
-        <el-button type="primary">下载模板</el-button>
-        <el-button type="primary">导入指标口径</el-button>
-        <el-button type="primary">导出指标口径</el-button>
-        <el-button type="warning" :disabled="!selectedIds.length">批量删除</el-button>
-      </div>
+    <el-tabs v-model="searchForm.catalogId" @tab-change="getTableData">
+      <el-tab-pane :closable="false" key="all" label="全部" name=""></el-tab-pane>
+      <el-tab-pane
+        closable
+        v-for="item in catalogList"
+        :key="item.catalogId"
+        :label="item.name"
+        :name="item.catalogId"
+      ></el-tab-pane>
+    </el-tabs>
+    <div class="flex">
+      <el-select class="w-32"></el-select>
+      <el-input class="w-52" placeholder="请输入" v-model="searchForm.keywords"></el-input>
+      <el-button type="primary" class="ml-3">查询</el-button>
+      <el-button>重置</el-button>
+    </div>
+    <div class="flex mt-4">
+      <el-button type="primary">新建指标口径</el-button>
+      <el-button type="primary">下载模板</el-button>
+      <el-button type="primary">导入指标口径</el-button>
+      <el-button type="primary">导出指标口径</el-button>
+      <el-button type="warning" :disabled="!selectedIds.length">批量删除</el-button>
     </div>
 
-    <template v-if="tableData.list.length">
-      <el-table class="mt-4" :data="tableData.list" @selection-change="selectionChange">
+    <template v-if="tableData.length">
+      <el-table
+        class="h-full mt-4"
+        v-loading="tableLoading"
+        :data="tableData"
+        @selection-change="selectionChange"
+      >
         <el-table-column type="selection" width="55" />
         <el-table-column label="序号" type="index" width="55" />
-        <el-table-column label="指标名称" prop="name"></el-table-column>
-        <el-table-column label="指标编码" prop="addr"></el-table-column>
-        <el-table-column label="指标目录" prop="name"></el-table-column>
-        <el-table-column label="指标释义" prop="name"></el-table-column>
-        <el-table-column label="统计口径(公式)" prop="name"></el-table-column>
-        <el-table-column label="指标出处" prop="name"></el-table-column>
-        <el-table-column label="统计单位" prop="name"></el-table-column>
-        <el-table-column label="指标标签" prop="name"></el-table-column>
-        <el-table-column label="填报人" prop="name"></el-table-column>
-        <el-table-column label="填报人单位" prop="name"></el-table-column>
-        <el-table-column label="创建时间" prop="name"></el-table-column>
+        <el-table-column prop="catalogPath" label="指标目录" width="150" show-overflow-tooltip>
+        </el-table-column>
+        <el-table-column prop="calNo" label="指标编码" show-overflow-tooltip />
+        <el-table-column prop="calName" label="指标名称" width="250" show-overflow-tooltip />
+        <el-table-column prop="calStatus" label="启用状态" width="100" show-overflow-tooltip>
+          <template #default="{ row }">
+            <div v-if="row.calStatus === '0'" style="color: red">停用</div>
+            <div v-if="row.calStatus === '1'" style="color: #2459ad">启用</div>
+          </template>
+        </el-table-column>
+        <el-table-column prop="explain" label="指标释义" show-overflow-tooltip width="200" />
+        <el-table-column prop="calFrom" label="指标出处" show-overflow-tooltip width="200" />
+        <el-table-column
+          prop="equations"
+          width="200"
+          label="统计口径(公式)"
+          show-overflow-tooltip
+        />
+        <el-table-column prop="calUnit" label="统计单位" show-overflow-tooltip />
+        <el-table-column prop="createBy" label="填报人" show-overflow-tooltip min-width="100" />
+        <el-table-column prop="orgId" label="填报人单位" show-overflow-tooltip min-width="100" />
+        <el-table-column prop="createdTime" label="创建时间" width="180">
+          <template #default="{ row }">
+            <div v-if="row.createdTime">
+              <div>{{ row.createdTime.split('T')[0] + '  ' + row.createdTime.split('T')[1] }}</div>
+            </div>
+            <span v-else>--</span>
+          </template>
+        </el-table-column>
         <el-table-column label="操作" fixed="right" min-width="120">
           <template #default="{ row }">
             <el-button type="primary" link>编辑</el-button>
@@ -45,49 +70,62 @@
         </el-table-column>
       </el-table>
       <div class="flex justify-end">
-        <el-pagination
-          v-model:current-page="searchForm.current"
-          v-model:page-size="searchForm.pageSize"
-          :page-sizes="[10, 20, 30, 40, 50, 100]"
-          layout="total, sizes, prev, pager, next, jumper"
-          :total="tableData.totalCount"
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-          class="mt-4"
-          background
+        <Pagination
+          :pageable="pageable"
+          :handle-current-change="handleCurrentChange"
+          :handle-size-change="handleSizeChange"
         />
       </div>
     </template>
+    <el-empty v-else />
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, reactive } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
+import Pagination from '@/components/Pagination/index.vue'
+import { TableApi, CatalogApi } from '@/services/modules/system/indicator'
+import { Indicator } from '@/services/modules/system/interface'
+import { useTable } from '@/hooks/useTable'
 import { useSelection } from '@/hooks/useSelection'
+import { useSearchForm } from '@/hooks/useSearchForm'
+
+type QueryParams = {
+  keywords: string
+  catalogId: string
+  pageType: string
+  caliberId: string
+}
+const { searchForm, resetSearchForm } = useSearchForm<QueryParams>({
+  keywords: '',
+  catalogId: '',
+  pageType: '0',
+  caliberId: ''
+})
+
+const {
+  tableData,
+  getTableData,
+  tableLoading,
+  resetPagination,
+  pageable,
+  handleCurrentChange,
+  handleSizeChange
+} = useTable(TableApi, searchForm)
 
 const activeName = ref('all')
-const tableData = reactive({
-  list: [
-    { name: '医疗总费用1', add: '福建', id: '1' },
-    { name: '医疗总费用2', add: '广东', id: '2' },
-    { name: '医疗总费用3', add: '湖南', id: '3' },
-    { name: '医疗总费用4', add: '广西', id: '4' },
-    { name: '医疗总费用5', add: '海南', id: '5' },
-    { name: '医疗总费用6', add: '浙江', id: '6' },
-    { name: '医疗总费用7', add: '上海', id: '7' },
-    { name: '医疗总费用8', add: '江西', id: '8' },
-    { name: '医疗总费用9', add: '湖北', id: '9' }
-  ],
-  multipleSelection: [],
-  totalCount: 0
-})
-
-const searchForm = reactive({
-  current: 1,
-  pageSize: 10
-})
-
+const catalogList = ref<Indicator.Catalog[]>([])
 const { selectedIds, selectionChange } = useSelection()
+
+const getCatalogData = async () => {
+  const res = await CatalogApi({ disType: '0' })
+  catalogList.value = res.data.data
+}
+
+onMounted(() => {
+  getTableData()
+  getCatalogData()
+})
 </script>
 
 <style scoped></style>

@@ -14,55 +14,52 @@
     <div class="right">
       <div class="mb-4 tabs">
         <el-tabs stretch>
-          <el-tab-pane v-for="item in tabsList" :key="item.id">
+          <el-tab-pane v-for="(item, index) in tabsList" :key="index">
             <template #label>
-              <div>
-                {{ item.title }}
-              </div>
+              <a :href="`#${item.id}`">
+                <div>
+                  {{ item.title }}
+                </div>
+              </a>
             </template>
           </el-tab-pane>
         </el-tabs>
       </div>
-      <el-scrollbar view-class="flex flex-col gap-4">
-        <div class="box">
+      <el-scrollbar
+        wrap-class="flex-1 min-h-0"
+        view-class="flex flex-col gap-4 whitespace-pre-wrap"
+      >
+        <div class="box" id="tab0">
           <h1>产品介绍</h1>
           <div>{{ menuItemData.CPJJ }}</div>
         </div>
-        <div class="box">
+        <div class="box" id="tab1">
           <h1>产品优势及亮点</h1>
           <div>{{ menuItemData.MBKH }}</div>
         </div>
-        <div class="box">
+        <div class="box" id="tab2">
           <h1>目标客户</h1>
           <div>{{ menuItemData.textarea_1719457546314 }}</div>
         </div>
-        <div class="box">
+        <div class="box" id="tab3">
           <h1>应用场景</h1>
           <div>{{ menuItemData.YYCJ }}</div>
         </div>
-        <div class="box">
+        <div class="box" id="tab4">
           <h1>商业模式</h1>
           <div>{{ menuItemData.SYMS }}</div>
         </div>
-        <div class="box">
-          <h1>产品介绍</h1>
+        <div class="box" id="tab5">
+          <h1>最佳实践</h1>
           <div>{{ menuItemData.CPJJ }}</div>
         </div>
-        <div class="box">
-          <h1>产品优势及亮点</h1>
+        <div class="box" id="tab6">
+          <h1>产品资料</h1>
           <div>{{ menuItemData.MBKH }}</div>
         </div>
-        <div class="box">
-          <h1>目标客户</h1>
+        <div class="box" id="tab7">
+          <h1>产品团队</h1>
           <div>{{ menuItemData.textarea_1719457546314 }}</div>
-        </div>
-        <div class="box">
-          <h1>应用场景</h1>
-          <div>{{ menuItemData.YYCJ }}</div>
-        </div>
-        <div class="box">
-          <h1>商业模式</h1>
-          <div>{{ menuItemData.SYMS }}</div>
         </div>
       </el-scrollbar>
     </div>
@@ -102,6 +99,11 @@ onMounted(() => {
 })
 </script>
 
+<style lang="scss">
+.el-scrollbar__wrap--hidden-default {
+  /* scroll-behavior: smooth; */
+}
+</style>
 <style lang="scss" scoped>
 .metrix-container {
   background-image: url('@/assets/images/wikipedia/bg.png');
