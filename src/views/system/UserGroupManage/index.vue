@@ -1,6 +1,9 @@
 <template>
   <div class="w-full h-full">
-    <iframe src="https://www.baidu.com/" frameborder="0"></iframe>
+    <iframe
+      src="http://localhost:9091/#/indicatorManageNew/indicatorManage/index"
+      frameborder="0"
+    ></iframe>
   </div>
 </template>
 

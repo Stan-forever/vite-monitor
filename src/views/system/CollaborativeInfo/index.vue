@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 import { onMounted } from 'vue'
-import { indicatorTableApi } from '@/services/modules/system/indicator'
+// import { indicatorTableApi } from '@/services/modules/system/indicator'
 
 const getData = async () => {
   const params = {

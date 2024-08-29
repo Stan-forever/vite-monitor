@@ -84,8 +84,8 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue'
 import Pagination from '@/components/Pagination/index.vue'
-import { TableApi, CatalogApi } from '@/services/modules/system/indicator'
-import { Indicator } from '@/services/modules/system/interface'
+// import { TableApi, CatalogApi } from '@/services/modules/system/indicator'
+// import { Indicator } from '@/services/modules/system/interface'
 import { useTable } from '@/hooks/useTable'
 import { useSelection } from '@/hooks/useSelection'
 import { useSearchForm } from '@/hooks/useSearchForm'
