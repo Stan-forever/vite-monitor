@@ -23,6 +23,9 @@ importers:
       axios:
         specifier: ^1.7.2
         version: 1.7.2
+      codemirror:
+        specifier: 5.65.9
+        version: 5.65.9
       dayjs:
         specifier: ^1.11.11
         version: 1.11.11
@@ -806,6 +809,9 @@ packages:
   clone@2.1.2:
     resolution: {integrity: sha512-3Pe/CF1Nn94hyhIYpjtiLhdCoEoz0DqQ+988E9gmeEdQZlojxnOb74wctFyuwWQHzqyf9X7C7MG8juUpqBJT8w==}
     engines: {node: '>=0.8'}
+
+  codemirror@5.65.9:
+    resolution: {integrity: sha512-19Jox5sAKpusTDgqgKB5dawPpQcY+ipQK7xoEI+MVucEF9qqFaXpeqY1KaoyGBso/wHQoDa4HMMxMjdsS3Zzzw==}
 
   collection-visit@1.0.0:
     resolution: {integrity: sha512-lNkKvzEeMBBjUGHZ+q6z9pSJla0KWAQPvtzhEV9+iGyQYG+pBpl7xKDhxoNSOZH2hhv0v5k0y2yAM4o4SjoSkw==}
@@ -3079,6 +3085,8 @@ snapshots:
       static-extend: 0.1.2
 
   clone@2.1.2: {}
+
+  codemirror@5.65.9: {}
 
   collection-visit@1.0.0:
     dependencies:
